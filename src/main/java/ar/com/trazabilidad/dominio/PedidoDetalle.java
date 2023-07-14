@@ -68,6 +68,9 @@ public class PedidoDetalle implements Serializable {
     public BigDecimal getCantidad() {
         return cantidad;
     }
+    public Integer getCantidadInteger() {
+        return cantidad.intValue();
+    }
 
     public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;

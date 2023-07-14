@@ -2,6 +2,7 @@ package ar.com.trazabilidad.implementacion;
 
 import ar.com.trazabilidad.datos.PedidoDetalleDao;
 import ar.com.trazabilidad.dominio.PedidoDetalle;
+import ar.com.trazabilidad.dominio.Productos;
 import ar.com.trazabilidad.servicio.PedidoDetalleService;
 import java.util.List;
 import java.util.Optional;
@@ -10,11 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class PedidoDetalleServiceImp implements PedidoDetalleService{
+public class PedidoDetalleServiceImp implements PedidoDetalleService {
 
     @Autowired
     PedidoDetalleDao pedidodetalledao;
-    
+
     @Override
     @Transactional
     public PedidoDetalle save(PedidoDetalle pedidodetalle) {
@@ -57,8 +58,13 @@ public class PedidoDetalleServiceImp implements PedidoDetalleService{
     }
 
     @Override
+    public List<PedidoDetalle> findAllByIdproducto(Productos producto) {
+        return pedidodetalledao.findAllByIdproducto(producto);
+    }
+
+    @Override
     public List<PedidoDetalle> saveAll(List<PedidoDetalle> pedidodetalles) {
         return (List<PedidoDetalle>) pedidodetalledao.saveAll(pedidodetalles);
     }
-    
+
 }

@@ -66,7 +66,7 @@ public class ObservacionesRS {
 
         Integer idpedido = obs.getIdpedido().getIdpedido();
         Integer idproducto = obs.getIdproducto().getIdproducto();
-        
+
         //PEDIDO QUE SE HACE LA OBSERVACION
         Optional<Pedidos> pedido = pedidoService.findById(idpedido);
 
@@ -79,7 +79,7 @@ public class ObservacionesRS {
         List<PedidoDetalle> detalleList = pedido.get().getPedidoDetalleList();
 
         PedidoDetalle detalle = null;
-       
+
         for (PedidoDetalle item : detalleList) {
             if (item.getIdproducto().getIdproducto().equals(idproducto)) {
                 detalle = item;
@@ -89,22 +89,26 @@ public class ObservacionesRS {
 
         //CANTIDAD MAXIMA DE UNIDADES DEL PEDIDO
         Integer cantidadMax = detalle.getCantidad().intValue();
-        
+
         Integer cantidadActual = 0;
-        
+
         List<Observaciones> observaciones = service.findByIdpedidoAndIdproducto(obs.getIdpedido(), obs.getIdproducto());
-        
-        for (Observaciones observacion : observaciones){
-            cantidadActual += observacion.getCantidadPiezas();
+
+        for (Observaciones observacion : observaciones) {
+            if (obs.getIdobservacion() != observacion.getIdobservacion()) {
+                cantidadActual += observacion.getCantidadPiezas();
+            }
+
         }
-        
+
+        log.info(obs.toString());
         cantidadActual += obs.getCantidadPiezas();
-  
-        if((cantidadActual) > cantidadMax ){
+        log.info(cantidadActual.toString());
+        if ((cantidadActual) > cantidadMax) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Cantidad de piezas ingresada no valida");
         }
-      
+
         Observaciones newobs = service.save(obs);
 
         return ResponseEntity.ok(newobs);
@@ -124,6 +128,7 @@ public class ObservacionesRS {
 
     public class ObservacionesGet {
 
+        public Integer idobservacion;
         public String codObservacion;
         public String codPedido;
         public String codProducto;
@@ -132,6 +137,7 @@ public class ObservacionesRS {
         public Integer cantidadPiezas;
 
         public ObservacionesGet(Observaciones observation) {
+            this.idobservacion = observation.getIdobservacion();
             this.codObservacion = observation.getCodObservacion();
             this.motivo = observation.getMotivo();
             this.cantidadPiezas = observation.getCantidadPiezas();

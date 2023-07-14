@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class ObservacionesServiceImp implements ObservacionesService{
+public class ObservacionesServiceImp implements ObservacionesService {
 
     @Autowired
     ObservacionesDao obsDao;
-    
+
     @Override
     @Transactional
     public Observaciones save(Observaciones obs) {
@@ -52,10 +52,21 @@ public class ObservacionesServiceImp implements ObservacionesService{
     public void delete(Observaciones obs) {
         obsDao.delete(obs);
     }
-    
+
     @Override
-    public List<Observaciones> findByIdpedidoAndIdproducto(Pedidos pedido, Productos producto){
+    public List<Observaciones> findByIdpedidoAndIdproducto(Pedidos pedido, Productos producto) {
         return obsDao.findByIdpedidoAndIdproducto(pedido, producto);
     }
-    
+
+    @Override
+    public List<Observaciones> findByIdpedido(Pedidos pedido) {
+        return obsDao.findByIdpedido(pedido);
+    }
+
+    @Override
+    public List<Observaciones> findByIdproducto(Productos producto) {
+        return obsDao.findByIdproducto(producto);
+
+    }
+
 }

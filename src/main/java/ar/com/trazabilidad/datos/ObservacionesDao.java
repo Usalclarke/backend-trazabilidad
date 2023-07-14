@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface ObservacionesDao extends CrudRepository<Observaciones, Integer>{
     List<Observaciones> findByIdpedidoAndIdproducto(Pedidos idpedido, Productos idproducto);
+    List<Observaciones> findByIdpedido(Pedidos idpedido);
+    List<Observaciones> findByIdproducto(Productos producto);
+
 }

@@ -145,6 +145,6 @@ public class Pedidos implements Serializable {
     public void setPedidoDetalleList(List<PedidoDetalle> pedidoDetalleList) {
         this.pedidoDetalleList = pedidoDetalleList;
     }
-    
+  
     
 }

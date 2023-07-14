@@ -12,4 +12,5 @@ public interface PedidosService {
     public boolean existsById(Integer id);
     public void deleteById(Integer id);
     public void delete(Pedidos pedido);
-}
+    public List<Pedidos> findAllByGalpon(Integer galpon);
+ }
