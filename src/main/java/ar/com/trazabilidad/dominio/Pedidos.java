@@ -1,4 +1,3 @@
-
 package ar.com.trazabilidad.dominio;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -19,11 +18,10 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="pedidos")
+@Table(name = "pedidos")
 public class Pedidos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,7 +32,7 @@ public class Pedidos implements Serializable {
     private String codPedido;
     private String descripcion;
     private String cliente;
-    @Column(updatable=false)
+    @Column(updatable = false)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEmision;
@@ -136,7 +134,7 @@ public class Pedidos implements Serializable {
     public void setGalpon(Integer galpon) {
         this.galpon = galpon;
     }
-    
+
     @JsonManagedReference
     public List<PedidoDetalle> getPedidoDetalleList() {
         return pedidoDetalleList;
@@ -145,6 +143,9 @@ public class Pedidos implements Serializable {
     public void setPedidoDetalleList(List<PedidoDetalle> pedidoDetalleList) {
         this.pedidoDetalleList = pedidoDetalleList;
     }
-  
-    
+
+    public boolean hasFechaTerminado() {
+        return fechaTerminado != null;
+    }
+
 }
