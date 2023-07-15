@@ -4,6 +4,8 @@ import ar.com.trazabilidad.dominio.Usuarios;
 import ar.com.trazabilidad.servicio.UsuariosService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +36,14 @@ public class UsuariosRS {
 
     @GetMapping("/")
     public List<Usuarios> obtenerUsuarios() {
-        return service.findAll();
+
+        List<Usuarios> usuarios = service.findAll();
+        
+        Collections.sort(usuarios, Comparator.comparing(Usuarios::getIdusuario));
+
+        List<Usuarios> usuarios_ = usuarios.subList(1, usuarios.size());
+
+        return usuarios_;
     }
 
     @GetMapping("/id/{id}")

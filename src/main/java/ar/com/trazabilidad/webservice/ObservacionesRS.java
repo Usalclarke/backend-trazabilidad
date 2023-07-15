@@ -60,6 +60,12 @@ public class ObservacionesRS {
         }
         return ResponseEntity.ok(obs);
     }
+    
+    @GetMapping("/getbypedido")
+    public List<Observaciones> obtenerPorIdPedido(@RequestBody Pedidos pedido){
+        List<Observaciones> obs = service.findByIdpedido(pedido);
+        return obs;
+    }
 
     @PostMapping("/")
     public ResponseEntity crear(@RequestBody Observaciones obs) {
@@ -135,7 +141,8 @@ public class ObservacionesRS {
         public Integer galpon;
         public String motivo;
         public Integer cantidadPiezas;
-
+        public Pedidos pedido; 
+        
         public ObservacionesGet(Observaciones observation) {
             this.idobservacion = observation.getIdobservacion();
             this.codObservacion = observation.getCodObservacion();
@@ -144,6 +151,8 @@ public class ObservacionesRS {
             this.codPedido = observation.getIdpedido().getCodPedido();
             this.galpon = observation.getIdpedido().getGalpon();
             this.codProducto = observation.getIdproducto().getCodProducto();
+            this.pedido = observation.getIdpedido(); 
+
         }
 
     }
