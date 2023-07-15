@@ -1,8 +1,10 @@
 package ar.com.trazabilidad.webservice;
 
 import ar.com.trazabilidad.dominio.PedidoDetalle;
+import ar.com.trazabilidad.dominio.Pedidos;
 import ar.com.trazabilidad.dominio.Productos;
 import ar.com.trazabilidad.servicio.PedidoDetalleService;
+import ar.com.trazabilidad.servicio.PedidosService;
 import ar.com.trazabilidad.servicio.ProductosService;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,9 @@ public class PedidoDetalleRS {
 
     @Autowired
     ProductosService serviceProducto;
+
+    @Autowired
+    PedidosService servicePedido;
 
     @GetMapping("/")
     public List<PedidoDetalle> obtener() {
@@ -80,9 +85,10 @@ public class PedidoDetalleRS {
             if (producto.isPresent()) {
                 detalle.setIdproducto(producto.get());
             } else {
-                Productos nuevoProducto = new Productos(detalle.getCodProducto(), detalle.getIdpedido().getDescripcion(), 1000);
+                Optional<Pedidos> pedido = servicePedido.findById(detalle.getIdpedido().getIdpedido());
+                Productos nuevoProducto = new Productos(detalle.getCodProducto(), pedido.get().getDescripcion(), 1000);
                 nuevoProducto = serviceProducto.save(nuevoProducto);
-                
+
                 detalle.setIdproducto(nuevoProducto);
 
             }

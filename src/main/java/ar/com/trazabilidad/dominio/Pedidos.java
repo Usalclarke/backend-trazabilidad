@@ -148,4 +148,10 @@ public class Pedidos implements Serializable {
         return fechaTerminado != null;
     }
 
+    @Override
+    public String toString() {
+        return "Pedidos{" + "idpedido=" + idpedido + ", codPedido=" + codPedido + ", descripcion=" + descripcion + ", cliente=" + cliente + ", fechaEmision=" + fechaEmision + ", fechaProduccion=" + fechaProduccion + ", fechaTerminado=" + fechaTerminado + '}';
+    }
+
+    
 }
