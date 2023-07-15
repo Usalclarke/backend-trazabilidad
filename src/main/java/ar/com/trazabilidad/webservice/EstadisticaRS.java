@@ -93,10 +93,6 @@ public class EstadisticaRS {
         //EFICIENCIA PROD GENERAL Y POR GALPON
         List<PedidoDetalle> pedidosDetalles = pedidoDetallService.findAllByIdproducto(producto.get());
 
-        //GENERAL
-        Integer cantidadFabricadas = 0;
-        Integer cantidadObservadas = 0;
-
         //POR GALPON
         Integer cantidadFabricadasGalpon = 0;
         Integer cantidadObservadasGalpon = 0;
@@ -108,8 +104,6 @@ public class EstadisticaRS {
             Boolean isTerminado = pedidoDetalle.getIdpedido().hasFechaTerminado();
 
             if (galpon != null && isTerminado) {
-                cantidadFabricadas += pedidoDetalle.getCantidadInteger();
-
                 if (galpon == nroGalpon) {
                     cantidadFabricadasGalpon += pedidoDetalle.getCantidadInteger();
                 }
@@ -119,10 +113,6 @@ public class EstadisticaRS {
 
         List<Observaciones> observaciones = ObservacionesService.findByIdproducto(producto.get());
 
-        cantidadObservadas += observaciones.stream()
-                .mapToInt(Observaciones::getCantidadPiezas)
-                .sum();
-
         cantidadObservadasGalpon += observaciones.stream()
                 .filter(observaciones1 -> observaciones1.getIdpedido().getGalpon().equals(nroGalpon))
                 .mapToInt(Observaciones::getCantidadPiezas)
@@ -131,7 +121,7 @@ public class EstadisticaRS {
         EficienciaGalpon eficienciaByGalpon = new EficienciaGalpon(nroGalpon, cantidadFabricadasGalpon, cantidadObservadasGalpon);
         
         return ResponseEntity.ok(
-            new EficienciaProducto(producto.get(),cantidadFabricadas,cantidadObservadas, eficienciaByGalpon)
+            new EficienciaProducto(producto.get(), eficienciaByGalpon)
         );
     }
 
@@ -151,14 +141,10 @@ public class EstadisticaRS {
     class EficienciaProducto {
 
         public Productos producto;
-        public Integer cantidadFabricados;
-        public Integer cantidadObservados;
         public EficienciaGalpon eficienciagalpon;
 
-        public EficienciaProducto(Productos producto, Integer cantidadFabricados, Integer cantidadObservados, EficienciaGalpon eficienciagalpon) {
+        public EficienciaProducto(Productos producto, EficienciaGalpon eficienciagalpon) {
             this.producto = producto;
-            this.cantidadFabricados = cantidadFabricados;
-            this.cantidadObservados = cantidadObservados;
             this.eficienciagalpon = eficienciagalpon;
         }
     }
