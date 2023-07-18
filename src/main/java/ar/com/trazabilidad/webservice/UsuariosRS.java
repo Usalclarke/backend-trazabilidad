@@ -91,7 +91,9 @@ public class UsuariosRS {
         if (user.get().getPassword().equals(user1.getPassword())) {
             //SI LAS PW COINCIDEN GENERAMOS TOKEN Y ENVIAMOS
             HashMap<String, String> map = new HashMap<String, String>();
+            
             map.put("token", generarToken(user.get()));
+            
             return ResponseEntity.ok(map);
         } else {
             throw new ResponseStatusException(

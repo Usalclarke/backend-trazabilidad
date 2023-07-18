@@ -39,6 +39,7 @@ public class PedidoDetalle implements Serializable {
     @ManyToOne
     @JoinColumn(name = "idproducto", referencedColumnName = "idproducto")
     private Productos idproducto;
+    private String descripcion; 
 
     @JsonBackReference
     public Pedidos getIdpedido() {
@@ -87,6 +88,15 @@ public class PedidoDetalle implements Serializable {
     public void setIdproducto(Productos idproducto) {
         this.idproducto = idproducto;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
     
     
 }

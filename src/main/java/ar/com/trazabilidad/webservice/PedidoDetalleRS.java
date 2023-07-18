@@ -85,12 +85,9 @@ public class PedidoDetalleRS {
             if (producto.isPresent()) {
                 detalle.setIdproducto(producto.get());
             } else {
-                Optional<Pedidos> pedido = servicePedido.findById(detalle.getIdpedido().getIdpedido());
-                Productos nuevoProducto = new Productos(detalle.getCodProducto(), pedido.get().getDescripcion(), 1000);
+                Productos nuevoProducto = new Productos(detalle.getCodProducto(), detalle.getDescripcion(), 1000);
                 nuevoProducto = serviceProducto.save(nuevoProducto);
-
                 detalle.setIdproducto(nuevoProducto);
-
             }
             service.save(detalle);
         }
